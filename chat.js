@@ -5,36 +5,39 @@ var form = document.getElementById("form");
 try {
 
       var host = "ws://localhost:8000/";
-      console.log("Host:", host);
-
       var s = new WebSocket(host);
 
       s.onopen = function (e) {
-            console.log("Socket opened.");
+            setLine("Socket opened.");
       };
 
       s.onclose = function (e) {
-            console.log("Socket closed.");
+            setLine("Socket closed.");
       };
 
       s.onmessage = function (e) {
-            console.log("Socket message:", e.data);
-            var p = document.createElement("p");
-            p.innerHTML = e.data;
-            output.appendChild(p);
+            setLine("Receive : " + e.data);
       };
 
       s.onerror = function (e) {
-            console.log("Socket error:", e);
+            setLine("Socket error " + e);
       };
 
 } catch (ex) {
-      console.log("Socket exception:", ex);
+      setLine("Socked exception");
 }
 
 form.addEventListener("submit", function (e) {
-      console.log("Send : " + inputBox.value);
       e.preventDefault();
+
       s.send(inputBox.value);
+      setLine("Send : " + inputBox.value);
       inputBox.value = "";
+
 }, false);
+
+var setLine = function (line) {
+      var p = document.createElement("p");
+      p.innerHTML = line;
+      output.appendChild(p);
+}

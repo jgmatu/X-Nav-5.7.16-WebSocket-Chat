@@ -45,7 +45,7 @@ class SimpleChat(WebSocket):
         for client in self.server.connections.itervalues():
             if client != self:
                 try:
-                    client.sendMessage(str(self.address[0]) + ' - ' + str(self.data))
+                    client.sendMessage("Node [" + str(self.address[0]) + ":" + str(self.address[1]) + "]" " Message : " + str(self.data))
                     print "Chat Send : " + self.data + " address : " + str(self.address)
                 except Exception as n:
                     print n
